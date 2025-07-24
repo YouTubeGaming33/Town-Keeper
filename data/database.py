@@ -10,4 +10,5 @@ if not MONGO_URI:
 
 # Setting up Database, Client and Collections.
 client = MongoClient(MONGO_URI)
-db = client["test"]
+db = client["townkeeper"]
+
