@@ -1,6 +1,8 @@
 # Required Library(s) and Import(s)
 import os
 
+from datetime import datetime
+
 from pymongo import MongoClient
 
 # Pulls MONGO=DB URI from .env - If not found then Raises ValueError.
@@ -11,4 +13,20 @@ if not MONGO_URI:
 # Setting up Database, Client and Collections.
 client = MongoClient(MONGO_URI)
 db = client["townkeeper"]
+adoptions = db["adoptions"]
 
+def adopt_pet(user_id: int, pet: dict):
+    adoptions.update_one(
+        {"user_id": user_id},
+        {
+            "$set": {
+                "pet_name": pet["Pet"],
+                "pet_icon": pet["assets"]["icon"],
+                "pet_emote": pet["assets"]["emote"],
+            }
+        },
+        upsert=True
+    )
+
+def get_pet(user_id: int):
+    return adoptions.find_one({"user_id": user_id})
