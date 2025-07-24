@@ -5,7 +5,7 @@ from discord.ui import View, Select
 
 from config import GUILD_ID
 from data.pet_data import load_pets
-from data.database import adopt_pet
+from data.database import adopt_pet, get_pet
 
 class AdoptDropdown(Select):
     def __init__(self, options_data):
@@ -43,6 +43,8 @@ class Pets(commands.Cog):
     @app_commands.command(name="adopt", description="Adopt your first pet!")
     @app_commands.guilds(GUILD_ID)
     async def adopt(self, interaction: discord.Interaction):
+        if get_pet(user_id=interaction.user.id):
+            await interaction.response.send_message("You have already Adopted a Pet!")
         view = DropdownView(self.options_data)  # Instantiate with options
         await interaction.response.send_message("Select your Pet!", view=view, ephemeral=True)
 
