@@ -3,35 +3,35 @@
       "Pet": "Dragonfly",
       "assets": {
         "icon": "https://cdn.discordapp.com/attachments/1064659716120264724/1065452568265904228/dragonfly.png",
-        "emote": "<:dragonfly:1065717601034064063>"
+        "emote": "<:Dragonfly:1117431926073085953>"
       }
     },
     {
       "Pet": "Babu",
       "assets": {
         "icon": "https://cdn.discordapp.com/attachments/1064659716120264724/1065452568056180778/Babu.png",
-        "emote": "<:Babu:1065717613126226030>"
+        "emote": "<:Babu:1117431933945794610>"
       }
     },
     {
       "Pet": "Turabada",
       "assets": {
         "icon": "https://cdn.discordapp.com/attachments/1064659716120264724/1065452568773406790/Turabada.png",
-        "emote": "<:Turabada:1065717583690612866>"
+        "emote": "<:Turabada:1117431912986857584>"
       }
     },
     {
       "Pet": "Gotera",
       "assets": {
         "icon": "https://cdn.discordapp.com/attachments/1064659716120264724/1065452568576278548/gotera.png",
-        "emote": "<:gotera:1065717591148081162>"
+        "emote": "<:Gotera:1117431919366377642>"
       }
     },
     {
       "Pet": "Glowing Schmeeche",
       "assets": {
         "icon": "https://media.discordapp.net/attachments/1064659716120264724/1066144724085379215/SchmeechGlowing.png?width=596&height=596",
-        "emote": "<:glowschmeechee:1066215048600621096>"
+        "emote": "<:GlowSchmeechee:1117442062938275920>"
       }
     },
     {
@@ -45,49 +45,49 @@
       "Pet": "Poison Schmeeche",
       "assets": {
         "icon": "https://media.discordapp.net/attachments/1064659716120264724/1066144724324462642/SchmeechPoison.png?width=596&height=596",
-        "emote": "<:poisonschmeechee:1066215084944269322>"
+        "emote": "<:PoisonSchmeechee:1117442057670242385>"
       }
     },
     {
     "Pet": "Firebug",
     "assets": {
       "icon": "https://cdn.discordapp.com/attachments/1064659716120264724/1066540427991318628/Firebug.png",
-      "emote": "<:Firebug:1066818402909442078>"
+      "emote": "<:Firebug:1117431906104000522>"
       }
     },
     {
       "Pet": "Wyrm",
       "assets": {
         "icon": "https://cdn.discordapp.com/attachments/1064659716120264724/1068258763200548875/Wyrm.png",
-        "emote": "<:Wyrm:1068258992662532196>"
+        "emote": "<:Wyrm:1117431988245237800>"
       }
     },
     {
       "Pet": "Spriggull",
       "assets": {
         "icon": "https://media.discordapp.net/attachments/1064659716120264724/1064660362823213096/Spriggg.png?width=642&height=519",
-        "emote": "<:Spriggull:1064686643988144228>"
+        "emote": "<:Spriggull:1117442060518174890>"
       }
     },
    {
     "Pet": "Phantom",
     "assets": {
       "icon": "https://cdn.discordapp.com/attachments/1064659716120264724/1067282311923634316/Phantom.png",
-      "emote": "<:Phantom:1067556086166605934>"
+      "emote": "<:Phantom:1117431896738115654>"
      }
     },
     {
       "Pet": "Dias",
       "assets": {
         "icon": "https://cdn.discordapp.com/attachments/1064659716120264724/1068281375557419028/Dais.png",
-        "emote": "<:Dais:1068282639301218435>"
+        "emote": "<:Dais:1117431979001004032>"
       }
     },
     {
       "Pet": "Red Schmeeche",
       "assets": {
         "icon": "https://media.discordapp.net/attachments/1064659716120264724/1066144724521599076/SchmeechRed.png?width=596&height=596",
-        "emote": "<:redschmeechee:1066215102619078656>"
+        "emote": "<:RedSchmeechee:1117441986476126399>"
       }
     }
   ]

@@ -30,3 +30,7 @@ def adopt_pet(user_id: int, pet: dict):
 
 def get_pet(user_id: int):
     return adoptions.find_one({"user_id": user_id})
+
+def remove_pet(user_id: int):
+    result = adoptions.delete_one({"user_id": user_id})
+    return result.deleted_count > 0
