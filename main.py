@@ -42,6 +42,12 @@ bot = TownKeeper()
 # Bot Event for when Ready.
 @bot.event
 async def on_ready():
+    server_count = len(bot.guilds)
+    activity = discord.Activity(
+        type=discord.ActivityType.watching,
+        name=f"over {server_count} Towns 🏘️"
+    )
+    await bot.change_presence(status=discord.Status.online, activity=activity)
     print(f"Logged on as {bot.user}")
 
 # Async Function for Starting Bot.

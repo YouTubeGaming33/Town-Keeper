@@ -15,9 +15,9 @@ client = MongoClient(MONGO_URI)
 db = client["townkeeper"]
 adoptions = db["adoptions"]
 
-def adopt_pet(user_id: int, pet: dict):
+def adopt_pet(user_id: int, guild_id: int, pet: dict):
     adoptions.update_one(
-        {"user_id": user_id},
+        {"guild_id": guild_id, "user_id": user_id},
         {
             "$set": {
                 "pet_name": pet["Pet"],
@@ -28,9 +28,16 @@ def adopt_pet(user_id: int, pet: dict):
         upsert=True
     )
 
-def get_pet(user_id: int):
-    return adoptions.find_one({"user_id": user_id})
+def get_pet(guild_id: int, user_id: int):
+    return adoptions.find_one({"guild_id": guild_id, "user_id": user_id})
 
-def remove_pet(user_id: int):
-    result = adoptions.delete_one({"user_id": user_id})
+def set_pet_nickname(guild_id: int, user_id: int, nickname: str):
+    adoptions.update_one(
+        {"guild_id": guild_id, "user_id": user_id},
+        {"$set": {"pet_nickname": nickname}},
+        upsert=False
+    )
+
+def remove_pet(guild_id: int, user_id: int):
+    result = adoptions.delete_one({"guild_id": guild_id, "user_id": user_id})
     return result.deleted_count > 0
