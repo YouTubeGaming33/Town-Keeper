@@ -63,6 +63,8 @@ def get_user_inventory(guild_id, user_id):
         return []
     return user["inventory"]
 
+def get_item(name):
+    return db["items"].find_one({"name": {"$regex": f"^{name}$", "$options": "i"}})
 
 def adopt_pet(user_id: int, guild_id: int, pet: dict):
     adoptions.update_one(
