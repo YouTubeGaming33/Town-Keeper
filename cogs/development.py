@@ -20,8 +20,9 @@ class Development(commands.Cog):
             return
         
         item = item.capitalize()
-        add_item_to_user(guild_id=interaction.guild.id, user_id=member.id, item_name=item, quantity=quantity)
-
+        success = add_item_to_user(guild_id=interaction.guild.id, user_id=member.id, item_name=item, quantity=quantity)
+        if not success:
+            await interaction.response.send_message(f"{item} is not a Valid Item in food.json")
         await interaction.response.send_message(f"{quantity} {item} added to {member}")
         
 

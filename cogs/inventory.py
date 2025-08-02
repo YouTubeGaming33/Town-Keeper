@@ -5,7 +5,7 @@ from discord import app_commands
 
 from config import GUILD_ID
 
-from data.database import get_user_inventory, get_item
+from data.database import get_user_inventory, get_item, get_distinct_item_count
 
 class InventoryView(discord.ui.View):
     def __init__(self, author: discord.User, inventory: list, per_page=3):
@@ -14,16 +14,23 @@ class InventoryView(discord.ui.View):
         self.inventory = inventory
         self.per_page = per_page
         self.current_page = 0
-        self.max_page = (len(inventory) - 1)
+        self.max_page = (len(inventory) - 1) // self.per_page
 
     async def update_embed(self, interaction: discord.Interaction):
         start = self.current_page * self.per_page
         end = start + self.per_page
-        embed = discord.Embed(title=f"{self.author.display_name}'s Inventory", color=discord.Color.blurple())
+        try:
+            item_count = get_distinct_item_count(guild_id=interaction.guild.id, user_id=interaction.user.id)
+            print(f"Distinct item count: {item_count}")
+        except Exception as e:
+            print(f"Error in get_distinct_item_count: {e}")
+            item_count = 0
+        embed = discord.Embed(title=f"{interaction.user.display_name}'s Inventory", description=f"You have a Total of **{item_count}** Different Item(s)", colour=discord.Colour.blurple())
 
         for item in self.inventory[start:end]:
-            item_data = get_user_inventory(item["name"])
-            description = item_data["description"] if item_data else "No description"
+            item_data = get_item(item["name"])
+            description = item_data.get("description", "No description") if item_data else "No description"
+
             embed.add_field(name=f"{item['name']} x{item['quantity']}", value=description, inline=False)
 
         embed.set_footer(text=f"Page {self.current_page + 1}/{self.max_page + 1}")
@@ -65,7 +72,13 @@ class Inventory(commands.Cog):
         view = InventoryView(interaction.user, inventory)
         start = 0
         end = view.per_page
-        embed = discord.Embed(title=f"{interaction.user.display_name}'s Inventory", color=discord.Color.blurple())
+        try:
+            item_count = get_distinct_item_count(guild_id=guild_id, user_id=user_id)
+            print(f"Distinct item count: {item_count}")
+        except Exception as e:
+            print(f"Error in get_distinct_item_count: {e}")
+            item_count = 0
+        embed = discord.Embed(title=f"{interaction.user.display_name}'s Inventory", description=f"You have a Total of **{item_count}** Different Item(s)", colour=discord.Colour.blurple())
 
         for item in inventory[start:end]:
             item_data = get_item(item["name"])

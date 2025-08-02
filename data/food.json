@@ -1,16 +1,17 @@
 [
-    { "Food": "Spriggull Drumstick" },
-    { "Food": "Babu Meat" },
-    { "Food": "Dias Meat" },
-    { "Food": "Candy Cane" },
-    { "Food": "Apple" },
-    { "Food": "Carrot" },
-    { "Food": "Pumpkin" },
-    { "Food": "Eggplant" },
-    { "Food": "Tomato" },
-    { "Food": "Onion" },
-    { "Food": "Potato" },
-    { "Food": "Garlic" },
-    { "Food": "Chocolate Easter Egg" },
-    { "Food": "Snowball" }
-  ]
+  { "name": "Apple", "description": "Apples are a common Food that can be eaten either raw, Roasted, or in a Stew." },
+  { "name": "Babu Meat", "description": "Babu Meat is one of the loot drops from the Babu, and it's main purpose is as a Food Source." },
+  { "name": "Blueberry", "description": "Blueberries are a Food Item that satisfy very little nutrition."},
+  { "name": "Candy Cane", "description": "" },
+  { "name": "Carrot", "description": "" },
+  { "name": "Chocolate Easter Egg", "description": "" },
+  { "name": "Dias Meat", "description": "Dais Meat is one of the loot drops from the Dais, and it's main purpose is as a Food Source." },
+  { "name": "Eggplant", "description": "" },
+  { "name": "Garlic", "description": "" },
+  { "name": "Onion", "description": "" },
+  { "name": "Potato", "description": "" },
+  { "name": "Pumpkin", "description": "" },
+  { "name": "Snowball", "description": "" },
+  { "name": "Spriggull Drumstick", "description": "" },
+  { "name": "Tomato", "description": "" }
+]
