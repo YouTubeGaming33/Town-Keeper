@@ -39,16 +39,26 @@ class TownKeeper(commands.Bot):
 # Makes TownKeeper() Class Function into a Variable.
 bot = TownKeeper()
 
-# Bot Event for when Ready.
-@bot.event
-async def on_ready():
+async def update_activity():
     server_count = len(bot.guilds)
     activity = discord.Activity(
         type=discord.ActivityType.watching,
         name=f"over {server_count} Towns 🏘️"
     )
     await bot.change_presence(status=discord.Status.online, activity=activity)
+
+# Bot Event for when Ready.
+@bot.event
+async def on_ready():
     print(f"Logged on as {bot.user}")
+
+@bot.event
+async def on_guild_join(guild):
+    await update_activity()
+
+@bot.event
+async def on_guild_remove(guild):
+    await update_activity()
 
 # Async Function for Starting Bot.
 async def main():

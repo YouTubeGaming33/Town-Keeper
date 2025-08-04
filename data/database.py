@@ -105,6 +105,8 @@ def adopt_pet(user_id: int, guild_id: int, pet: dict):
                 "pet_name": pet["Pet"],
                 "pet_icon": pet["assets"]["icon"],
                 "pet_emote": pet["assets"]["emote"],
+                "health": "❤️❤️❤️❤️❤️",
+                "hunger": "🍔🍔🍔🍔🍔"
             }
         },
         upsert=True
