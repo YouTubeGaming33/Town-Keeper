@@ -6,10 +6,16 @@ from discord import app_commands
 from discord.ui import Button, View
 from discord.app_commands import Choice, choices
 
+import time
+import random
 
 from config import GUILD_ID
 
-from data.database import add_item_to_user
+from data.database import add_item_to_user, set_cooldown_timestamp, get_time_since_last_use, get_random_food_item
+
+def randomnum():
+    quantity = random.randint(1,3)
+    return quantity
 
 class DustBowl(View):
     def __init__(self):
@@ -35,7 +41,29 @@ class Walk(commands.Cog):
     @app_commands.command(name="walk", description="Go for a Walk to receive Random Items")
     @app_commands.guilds(GUILD_ID)
     async def walk(self, interaction: discord.Interaction):
-        await interaction.response.send_message(f"You went on a Walk and Found..!")
+        cooldowncount = 21600  # 6 hours
+
+        elapsed = get_time_since_last_use(interaction.guild.id, interaction.user.id, "walk")
+        if elapsed is not None and elapsed < cooldowncount:
+            remaining = cooldowncount - elapsed
+            expire_timestamp = int(time.time()) + remaining
+
+            await interaction.response.send_message(
+                f"> 🚶 You can walk again <t:{expire_timestamp}:R>.",
+                ephemeral=True
+            )
+            return
+
+        # Update the cooldown time
+        set_cooldown_timestamp(interaction.guild.id, interaction.user.id, "walk")
+
+        random_item = get_random_food_item()
+        quantity = randomnum()
+
+        print (random_item, quantity)
+        add_item_to_user(interaction.guild.id, interaction.user.id, random_item, quantity)
+
+        await interaction.response.send_message(f"> You found {quantity}x {random_item} on your Walk")
 
     @app_commands.command(name="go-to", description="Go to a Specifc Area")
     @app_commands.guilds(GUILD_ID)

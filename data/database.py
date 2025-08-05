@@ -1,6 +1,8 @@
 # Required Library(s) and Import(s)
 import os
 import json
+import time
+import random
 
 from datetime import datetime
 
@@ -16,6 +18,13 @@ client = MongoClient(MONGO_URI)
 db = client["townkeeper"]
 adoptions = db["adoptions"]
 inventory = db["inventory"]
+timers = db["timers"]
+
+def get_random_food_item():
+    with open("data/food.json", "r") as f:
+        food_items = json.load(f)
+
+    return random.choice(food_items)["name"].title()
 
 # Used to check if Item exists.
 with open("data/food.json", "r") as f:
@@ -27,14 +36,30 @@ with open("data/food.json", "r") as f:
     food_items = json.load(f)  # Load JSON into a separate variable
 
 for item in food_items:
+    item["type"] = "food"  
     items_collection.update_one(
-        {"name": item["name"]},  # Match by name (case sensitive)
-        {"$set": item},
+        {"name": item["name"]},  
+        {"$set": item},          
         upsert=True
     )
 
+def set_cooldown_timestamp(guild_id: int, user_id: int, command: str):
+    """Stores the current timestamp for when a command was last used."""
+    timestamp = int(time.time())
+    timers.update_one(
+        {"guild_id": guild_id, "user_id": user_id, "command": command},
+        {"$set": {"last_used": timestamp}},
+        upsert=True
+    )
 
-def add_item_to_user(guild_id, user_id, item_name, quantity=1):
+def get_time_since_last_use(guild_id: int, user_id: int, command: str):
+    """Returns how many seconds ago the command was last used."""
+    record = timers.find_one({"guild_id": guild_id, "user_id": user_id, "command": command})
+    if not record or "last_used" not in record:
+        return None  # Never used before
+    return int(time.time()) - record["last_used"]
+
+def add_item_to_user(guild_id, user_id, item_name, quantity):
     user = inventory.find_one({"user_id": str(user_id), "guild_id": str(guild_id)})
 
     if item_name not in ITEM_DEFINITIONS:
