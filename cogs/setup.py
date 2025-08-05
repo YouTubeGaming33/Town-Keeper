@@ -13,7 +13,7 @@ class Setup(commands.Cog):
             if channel.permissions_for(guild.me).send_messages:
                 embed = discord.Embed(
                     title="Town Keeper Set-up Guide:",
-                    description="Follow the Instructions below to Set-up Town Keeper for your Server.",
+                    description="Follow the Instructions below to Set-up Ton Keeper for your Server.",
                     colour=discord.Colour.blue()
                 )
 
