@@ -131,7 +131,6 @@ class Inventory(commands.Cog):
         self.bot = bot
 
     @app_commands.command(name="inventory", description="View your inventory.")
-    @app_commands.guilds(GUILD_ID)
     async def inventory(self, interaction: discord.Interaction):
         user_id = interaction.user.id
         guild_id = interaction.guild.id

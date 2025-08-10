@@ -13,7 +13,6 @@ class Development(commands.Cog):
         self.bot = bot
 
     @app_commands.command(name="item", description="Adds Item to Member - Testing Purposes")
-    @app_commands.guilds(GUILD_ID)
     async def item(self, interaction: discord.Interaction, member: discord.Member, item: str, quantity: int):
         if interaction.user.id not in DEVS:
             await interaction.response.send_message("You are not a Developer!")
@@ -27,7 +26,6 @@ class Development(commands.Cog):
         
 
     @app_commands.command(name="ping", description="Sends Latency, pong!")
-    @app_commands.guilds((GUILD_ID))
     async def ping(self, interaction: discord.Interaction):
         if interaction.user.id not in DEVS:
             await interaction.response.send_message("You are not a Developer!")

@@ -39,7 +39,6 @@ class Walk(commands.Cog):
         self.bot = bot
     
     @app_commands.command(name="walk", description="Go for a Walk to receive Random Items")
-    @app_commands.guilds(GUILD_ID)
     async def walk(self, interaction: discord.Interaction):
         cooldowncount = 21600  # 6 hours
 
@@ -66,7 +65,6 @@ class Walk(commands.Cog):
         await interaction.response.send_message(f"> You found {quantity}x {random_item} on your Walk")
 
     @app_commands.command(name="go-to", description="Go to a Specifc Area")
-    @app_commands.guilds(GUILD_ID)
     @app_commands.choices(area=[Choice(name="Camps", value="Camps"), Choice(name="Dust Bowl", value="Dust Bowl"), Choice(name="Forest", value="Forest"), Choice(name="Mines", value="Mines"), Choice(name="Mountain Pass", value="Mountain Pass"), Choice(name="Ponds", value="Ponds"), Choice(name="Tarns", value="Tarns")])
     async def goTo(self, interaction: discord.Interaction, area: Choice[str]):
         area = area.value

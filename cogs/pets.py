@@ -79,7 +79,6 @@ class Pets(commands.Cog):
         self.bot = bot
 
     @app_commands.command(name="adopt", description="Adopt your first pet")
-    @app_commands.guilds(GUILD_ID)
     async def adopt(self, interaction: discord.Interaction):
         # Check if user already has a pet
         if get_pet(guild_id=interaction.guild.id, user_id=interaction.user.id):
@@ -98,7 +97,6 @@ class Pets(commands.Cog):
         await interaction.response.send_message("Select your First Pet:", view=PetView(pets), ephemeral=True)
 
     @app_commands.command(name="set-nickname", description="Update Nickname of your Pet")
-    @app_commands.guilds(GUILD_ID)
     async def set_nickname(self, interaction: discord.Interaction, nickname: str):
         # Very basic inappropriate word filter
         banned_words = [
@@ -125,7 +123,6 @@ class Pets(commands.Cog):
         await interaction.response.send_message(f"Updated Pets Nickname to: {nickname}", ephemeral=True)
 
     @app_commands.command(name="stats", description="Shows your Pets Stats")
-    @app_commands.guilds(GUILD_ID)
     async def stats(self, interaction: discord.Interaction):
         statData = get_pet(interaction.guild.id, interaction.user.id)
 
@@ -141,7 +138,6 @@ class Pets(commands.Cog):
         await interaction.response.send_message(embed=embed)
 
     @app_commands.command(name="view", description="View your Pet")
-    @app_commands.guilds(GUILD_ID)
     async def view(self, interaction: discord.Interaction):
         petData = get_pet(guild_id=interaction.guild.id, user_id=interaction.user.id)
 
@@ -166,7 +162,6 @@ class Pets(commands.Cog):
         await interaction.response.send_message(embed=embed)
 
     @app_commands.command(name="abandon", description="Abandon your Adopted Pet..")
-    @app_commands.guilds(GUILD_ID)
     async def abandon(self, interaction: discord.Interaction):
         petData = get_pet(guild_id=interaction.guild.id, user_id=interaction.user.id)
         if not petData:

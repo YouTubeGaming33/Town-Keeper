@@ -17,6 +17,9 @@ import asyncio
 # Set Intents to .all - Allows for Use of All Intents without adding additional.
 intents = discord.Intents.all()
 
+# DEV MODE
+DEV_MODE = True
+
 # Bot Class - Initiates, Loads Cog(s), Syncs Commands.
 class TownKeeper(commands.Bot):
     def __init__(self):
@@ -29,10 +32,13 @@ class TownKeeper(commands.Bot):
                 print(f"Successfully Loaded Cog: {filename}")
             
         try:
-            synced = await self.tree.sync(guild=GUILD_ID)
-            print(f"Successfully Synced {len(synced)} Command(s)")
-            global_synced = await self.tree.sync()
-            print (f"Successfully Synced {len(global_synced)} Command(s)")
+            if DEV_MODE:
+                self.tree.copy_global_to(guild=GUILD_ID)
+                guild_synced = await self.tree.sync(guild=GUILD_ID)
+                print(f"[DEV MODE] Synced {len(guild_synced)} Command(s) to Development Guild.")
+            else:
+                global_synced = await self.tree.sync()
+                print(f"[PROD MODE] Synced {len(global_synced)} Global Command(s)")
         except Exception as e:
             print(f"Failed to Sync Commands: {e}")
 
