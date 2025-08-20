@@ -9,8 +9,6 @@ from discord.app_commands import Choice, choices
 import time
 import random
 
-from config import GUILD_ID
-
 from data.database import add_item_to_user, set_cooldown_timestamp, get_time_since_last_use, get_random_food_item
 
 def randomnum():

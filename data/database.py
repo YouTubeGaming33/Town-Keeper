@@ -19,6 +19,7 @@ db = client["townkeeper"]
 adoptions = db["adoptions"]
 inventory = db["inventory"]
 timers = db["timers"]
+badges = db["badges"]
 
 def get_random_food_item():
     with open("data/food.json", "r") as f:
@@ -122,6 +123,13 @@ def get_distinct_item_count(guild_id, user_id):
 def get_item(name):
     return db["items"].find_one({"name": {"$regex": f"^{name}$", "$options": "i"}})
 
+def set_happiness(user_id: int, guild_id: int, happiness: str):
+    adoptions.update_one(
+        {"guild_id": guild_id, "user_id": user_id},
+        {"$set": {"happiness": happiness}},
+        upsert=False
+    )
+
 def adopt_pet(user_id: int, guild_id: int, pet: dict):
     adoptions.update_one(
         {"guild_id": guild_id, "user_id": user_id},
@@ -131,7 +139,8 @@ def adopt_pet(user_id: int, guild_id: int, pet: dict):
                 "pet_icon": pet["assets"]["icon"],
                 "pet_emote": pet["assets"]["emote"],
                 "health": "❤️❤️❤️❤️❤️",
-                "hunger": "🍔🍔🍔🍔🍔"
+                "hunger": "🍔🍔🍔🍔🍔",
+                "happiness": "😄😄😄😄😄"
             }
         },
         upsert=True

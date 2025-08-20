@@ -1,11 +1,10 @@
-from config import GUILD_ID
 import discord
 from discord import app_commands
 from discord.ext import commands
 import json
 import re
 
-from data.database import adopt_pet, get_pet, remove_pet, set_pet_nickname
+from data.database import adopt_pet, get_pet, remove_pet, set_pet_nickname, set_happiness
 
 # Dropdown menu for selecting a pet to adopt
 class PetDropdown(discord.ui.Select):
@@ -60,7 +59,7 @@ class PetDropdown(discord.ui.Select):
             if icon_url:
                 embed.set_thumbnail(url=icon_url)
             embed.set_footer(text="✨ Use /walk to grab things needed for your pet!")
-            await interaction.response.send_message(f"> You decided to adopt {selected_pet_name} | {emote}", embed=embed, ephemeral=True)
+            await interaction.response.send_message(f"> You decided to adopt {selected_pet_name} | {emote}", embed=embed)
 
         except Exception as e:
             print(f"Error in PetDropdown callback: {e}")
@@ -94,7 +93,7 @@ class Pets(commands.Cog):
             return
 
         # Send the dropdown view
-        await interaction.response.send_message("Select your First Pet:", view=PetView(pets), ephemeral=True)
+        await interaction.response.send_message("Select your First Pet:", view=PetView(pets))
 
     @app_commands.command(name="set-nickname", description="Update Nickname of your Pet")
     async def set_nickname(self, interaction: discord.Interaction, nickname: str):
@@ -158,10 +157,31 @@ class Pets(commands.Cog):
         embed.add_field(name="Type:", value=pet_name, inline=False)
         embed.add_field(name="Nickname:", value=nickname, inline=False)
         embed.set_thumbnail(url=icon)
+        embed.set_footer(text="👋 Pet your pet using /pet")
 
         await interaction.response.send_message(embed=embed)
 
-    @app_commands.command(name="abandon", description="Abandon your Adopted Pet..")
+    @app_commands.command(name="pet", description="Show love to your Pet")
+    async def pet(self, interaction: discord.Interaction):
+        petData = get_pet(interaction.guild.id, interaction.user.id)
+        if not petData:
+            await interaction.response.send_message("You have no Pets", ephemeral=True)
+            return
+        
+        print("Here")
+        happiness = petData["happiness"]
+        maxhappiness = "😄😄😄😄😄"
+        print("Here1")
+        if happiness == maxhappiness:
+            await interaction.response.send_message("You're pet is at Max Happiness!", ephemeral=True)
+        
+        happiness += "😄"
+
+        set_happiness(interaction.user.id, interaction.guild.id, happiness)
+
+        await interaction.response.send_message(f"Your Pets Happiness is now: {happiness}")
+
+    @app_commands.command(name="abandon", description="Abandon your Pet..")
     async def abandon(self, interaction: discord.Interaction):
         petData = get_pet(guild_id=interaction.guild.id, user_id=interaction.user.id)
         if not petData:

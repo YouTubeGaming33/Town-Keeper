@@ -56,6 +56,7 @@ async def update_activity():
 # Bot Event for when Ready.
 @bot.event
 async def on_ready():
+    await update_activity()
     print(f"Logged on as {bot.user}")
 
 @bot.event

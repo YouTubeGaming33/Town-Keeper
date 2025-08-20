@@ -3,9 +3,7 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 
-from config import GUILD_ID
-
-from data.database import get_user_inventory, get_item, get_distinct_item_count, remove_item_from_user  # Assume use_item() to be added
+from data.database import get_user_inventory, get_item, get_distinct_item_count, remove_item_from_user
 
 # Dropdown for using an item
 class UseItemSelect(discord.ui.Select):
@@ -55,10 +53,7 @@ class UseItemSelect(discord.ui.Select):
 
         embed.set_footer(text=f"Page 1/{view.max_page + 1}")
 
-            # Send as a new ephemeral message — no editing needed
         await interaction.response.send_message(content=used_msg, embed=embed, view=view, ephemeral=True)
-
-        # You can later call a use_item() function here to affect the DB
 
 # Dropdown view
 class UseItemView(discord.ui.View):
